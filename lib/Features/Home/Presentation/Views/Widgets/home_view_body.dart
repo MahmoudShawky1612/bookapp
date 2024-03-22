@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import '../../../../../Core/utils/styles/font_styls.dart';
 import 'best_seller_list_view.dart';
-import 'book_list_view.dart';
+import 'featured_book_list_view.dart';
 import 'custom_app_bar.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -22,7 +22,7 @@ class HomeViewBody extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 child: CustomAppBar(),
               ),
-              BooksListView(),
+              FeaturedBooksListView(),
                SizedBox(height: 55,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
