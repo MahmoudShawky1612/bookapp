@@ -3,7 +3,7 @@ class BookModel {
   String? id;
   String? etag;
   String? selfLink;
-  VolumeInfo? volumeInfo;
+  late VolumeInfo volumeInfo;
   SaleInfo? saleInfo;
   AccessInfo? accessInfo;
   SearchInfo? searchInfo;
@@ -13,7 +13,7 @@ class BookModel {
         this.id,
         this.etag,
         this.selfLink,
-        this.volumeInfo,
+        required this.volumeInfo,
         this.saleInfo,
         this.accessInfo,
         this.searchInfo});
@@ -23,19 +23,18 @@ class BookModel {
     id = json['id'];
     etag = json['etag'];
     selfLink = json['selfLink'];
-    volumeInfo = json['volumeInfo'] != null
-        ? new VolumeInfo.fromJson(json['volumeInfo'])
-        : null;
+    volumeInfo = VolumeInfo.fromJson(json['volumeInfo'] as Map<String, dynamic>); // Corrected here
     saleInfo = json['saleInfo'] != null
-        ? new SaleInfo.fromJson(json['saleInfo'])
+        ? SaleInfo.fromJson(json['saleInfo'])
         : null;
     accessInfo = json['accessInfo'] != null
-        ? new AccessInfo.fromJson(json['accessInfo'])
+        ? AccessInfo.fromJson(json['accessInfo'])
         : null;
     searchInfo = json['searchInfo'] != null
-        ? new SearchInfo.fromJson(json['searchInfo'])
+        ? SearchInfo.fromJson(json['searchInfo'])
         : null;
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -75,7 +74,7 @@ class VolumeInfo {
   bool? allowAnonLogging;
   String? contentVersion;
   PanelizationSummary? panelizationSummary;
-  ImageLinks? imageLinks;
+  late ImageLinks imageLinks;
   String? language;
   String? previewLink;
   String? infoLink;
@@ -97,7 +96,7 @@ class VolumeInfo {
         this.allowAnonLogging,
         this.contentVersion,
         this.panelizationSummary,
-        this.imageLinks,
+        required this.imageLinks,
         this.language,
         this.previewLink,
         this.infoLink,
@@ -106,7 +105,12 @@ class VolumeInfo {
   VolumeInfo.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     subtitle = json['subtitle'];
-    authors = json['authors'].cast<String>();
+
+    // Check if authors field is not null
+    if (json['authors'] != null) {
+      authors = json['authors'].cast<String>();
+    }
+
     publisher = json['publisher'];
     publishedDate = json['publishedDate'];
     description = json['description'];
@@ -121,16 +125,19 @@ class VolumeInfo {
         : null;
     pageCount = json['pageCount'];
     printType = json['printType'];
-    categories = json['categories'].cast<String>();
+
+    // Check if categories field is not null
+    if (json['categories'] != null) {
+      categories = json['categories'].cast<String>();
+    }
+
     maturityRating = json['maturityRating'];
     allowAnonLogging = json['allowAnonLogging'];
     contentVersion = json['contentVersion'];
     panelizationSummary = json['panelizationSummary'] != null
         ? new PanelizationSummary.fromJson(json['panelizationSummary'])
         : null;
-    imageLinks = json['imageLinks'] != null
-        ? new ImageLinks.fromJson(json['imageLinks'])
-        : null;
+    imageLinks = new ImageLinks.fromJson(json['imageLinks']);
     language = json['language'];
     previewLink = json['previewLink'];
     infoLink = json['infoLink'];
@@ -230,10 +237,10 @@ class PanelizationSummary {
 }
 
 class ImageLinks {
-  String? smallThumbnail;
-  String? thumbnail;
+  late String smallThumbnail;
+  late String thumbnail;
 
-  ImageLinks({this.smallThumbnail, this.thumbnail});
+  ImageLinks({required this.smallThumbnail, required this.thumbnail});
 
   ImageLinks.fromJson(Map<String, dynamic> json) {
     smallThumbnail = json['smallThumbnail'];
